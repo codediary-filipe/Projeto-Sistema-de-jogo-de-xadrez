@@ -1,0 +1,14 @@
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\bin\Debug\net7.0\JogoDeXadrez.exe
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\bin\Debug\net7.0\JogoDeXadrez.deps.json
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\bin\Debug\net7.0\JogoDeXadrez.runtimeconfig.json
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\bin\Debug\net7.0\JogoDeXadrez.dll
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\bin\Debug\net7.0\JogoDeXadrez.pdb
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\JogoDeXadrez.GeneratedMSBuildEditorConfig.editorconfig
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\JogoDeXadrez.AssemblyInfoInputs.cache
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\JogoDeXadrez.AssemblyInfo.cs
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\JogoDeXadrez.csproj.CoreCompileInputs.cache
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\JogoDeXadrez.dll
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\refint\JogoDeXadrez.dll
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\JogoDeXadrez.pdb
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\JogoDeXadrez.genruntimeconfig.cache
+P:\f3lip\Documents\Projeto_Sistema_Jogo-de-xadrez\JogoDeXadrez\obj\Debug\net7.0\ref\JogoDeXadrez.dll
