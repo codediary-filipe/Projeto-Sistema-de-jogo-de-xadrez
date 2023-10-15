@@ -24,14 +24,17 @@ O projeto ainda está em desenvolvimento
 
 ## ☕ Visão Geral do Projeto
 O projeto é um recurso do curso: 
-<a href="https://www.udemy.com/course/programacao-orientada-a-objetos-csharp/">
+<a href="https://www.udemy.com/course/programacao-orientada-a-objetos-csharp/" target="_blank">
   C# COMPLETO Programação Orientada a Objetos + Projetos
-</a> Criado por <a href="https://www.udemy.com/course/programacao-orientada-a-objetos-csharp/#instructor-1">Nelio Alves</a> Instrutor da Udemy.<br>
- O projeto é dividido em vários pacotes e classes que representam os componentes do jogo, como tabuleiro, peças, jogadores e movimentos.
+</a> Criado por <a href="https://www.udemy.com/course/programacao-orientada-a-objetos-csharp/#instructor-1" target="_blank">Nelio Alves</a> Instrutor da Udemy. O projeto é dividido em vários pacotes e classes que representam os componentes do jogo, como tabuleiro, peças, jogadores e movimentos.
 
  ### 🚀 Etapas e Melhorias
 
-- [x] Iniciando o projeto 13/10/2023
+- [x] Iniciando o projeto (13/10/2023)
+- [x] Criar classes para representar: (14/10/2023)
+  * tabuleiro;
+  * peças;
+  * posições e uma aplicação para exibir o tabuleiro na tela.
 
 ## 😄 Execução do projeto
 
