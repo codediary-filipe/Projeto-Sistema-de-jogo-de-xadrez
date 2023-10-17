@@ -1,5 +1,7 @@
+//Importando namespaces para nossa classe:
+
 //Criando as cores da minha peça:
-namespace chessboard.Enums
+namespace chessboard
 {
     //Criando um tipo enum:
     public enum Color : int

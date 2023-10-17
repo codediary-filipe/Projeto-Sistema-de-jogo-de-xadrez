@@ -1,27 +1,31 @@
-//Class peça de xadrez:
-/*Informações:
- A classe ChessPiece representa uma peça de xadrez. Ela tem propriedades para posição, cor, quantidade de movimentos e uma referência ao tabuleiro. 
-*/
-using chessboard.Enums;
+//Importando namespaces para nossa classe:
+using System;
+using chessboard;
+using chessgame;
 
-namespace chessboard.Entities
+//Informações:
+/*
+  É uma classe base que representa uma peça de xadrez no jogo. Ela fornece informações e funcionalidades comuns a todas as peças de xadrez.
+*/
+namespace chessboard
 {
     public class ChessPiece
     {
-        // Elementos: posição, tabuleiro, quantidade de movimentos e cor da minha peça de xadrez:
-        public Position position { get; set; }
-        public Color color { get; set; }
-        // Propriedade "GetMoves" somente acessível pela própria classe e suas subclasses.
-        public int GetMoves { get; protected set; }
-        public Board board { get; protected set; }
+        //Elementos: posição, tabuleiro, quantidade de movimentos e cor da minha peça de xadrez:
+        public Position position { get; set; } //Representa um objeto Position que contém as coordenadas da peça.
+        public Color color { get; set; } //Representa a cor da peça. Ela utiliza o enum Color para especificar se a peça é branca ou preta.
+        public int GetMoves { get; protected set; } /*Representa a quantidade de movimentos que a peça realizou.
+         Ela é protegida (protected set) para que apenas a classe ChessPiece e suas subclasses possam modificar essa propriedade.*/
+        public Board board { get; protected set; } //Esta é uma propriedade que faz referência ao tabuleiro em que a peça está localizada.
 
-        //Construtor:
-        public ChessPiece(Position position, Color color, Board board)
+        //Ele aceita como argumentos um objeto Board (representando o tabuleiro) e uma cor (branca ou preta) para a peça. 
+        public ChessPiece(Board board, Color color)
         {
-            this.position = position;
-            this.color = color;
+            //Inicializa a posição da peça como nula (pois a peça ainda não foi posicionada no tabuleiro)
+            position = null;
             this.board = board;
-            // Quantidade de movimentos padrão, iniciando com 0.
+            this.color = color;
+            //inicia o contador de movimentos com 0:
             GetMoves = 0;
         }
     }

@@ -1,10 +1,14 @@
+//Importando namespaces para nossa classe:
 
-//Criando a class tabuleiro de xadrex:
 namespace chessboard
 {
-    public class Position //Criando a class posição do tabuleiro de xadrez:
+
+    //A classe Position no namespace chessboard é responsável por representar uma posição no tabuleiro de xadrez:
+    public class Position
     {
-        //Elementos linha e coluna:
+        /*
+        Estas são propriedades da classe que representam a linha e a coluna da posição no tabuleiro. As propriedades têm métodos de acesso get e set, o que significa que elas podem ser lidas e modificadas.
+        */
         public int line { get; set; }
         public int column { get; set; }
 
