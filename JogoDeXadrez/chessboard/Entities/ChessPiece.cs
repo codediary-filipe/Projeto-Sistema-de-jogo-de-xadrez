@@ -1,7 +1,4 @@
 //Importando namespaces para nossa classe:
-using System;
-using chessboard;
-using chessgame;
 
 //Informações:
 /*
@@ -27,6 +24,11 @@ namespace chessboard
             this.color = color;
             //inicia o contador de movimentos com 0:
             GetMoves = 0;
+        }
+        //Método que faz a incrementação dos movimentos da peça:
+        public void increaseMovements()
+        {
+           GetMoves++;
         }
     }
 }

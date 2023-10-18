@@ -16,20 +16,10 @@ namespace JogoDeXadrez
       //A estrutura try é usada para envolver um bloco de código que pode lançar exceções:
       try
       {
-        //Essa linha de comando, cria um tabuleiro do tipo board(tabuleiro) com uma matriz 8x8 que é o padrão dos jogos de xadrez:
-        Board Tabuleiro = new Board(8, 8);
-
-        //Adicionando manual peças em nosso tabuleiro:
-
-        //Explicações: 
-        /*
-            Utilizando o método InsertPart para criar e inserir novas peças em nosso tabuleiro:
-        */
-        //Novo objeto do tipo Torrer((inserido no Tabuleiro, é criada com a cor preta), na posição 0,0)
-        Tabuleiro.InsertPart(new Tower(Tabuleiro, Color.Preta), new Position(0, 0));
 
         // Chamando o método para imprimir o tabuleiro:
-        Screen.ViewBoard(Tabuleiro);
+        BoardGame Game = new BoardGame();
+        Screen.ViewBoard(Game.Tabuleiro);
       }
       /*
       A estrutura catch é usada para capturar exceções do tipo BoardException, que podem ser lançadas dentro do bloco try.

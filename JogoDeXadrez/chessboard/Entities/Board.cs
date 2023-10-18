@@ -1,7 +1,3 @@
-//Importando namespaces para nossa classe:
-using System;
-using chessboard;
-using chessgame;
 
 //Informações:
 /* 
@@ -78,6 +74,26 @@ namespace chessboard
             if (!PositionCheck(pos))
             {
                 throw new BoardException("Posição inválida!");
+            }
+        }
+        //Classe criada para retirar uma peça do tabuleiro:
+        public ChessPiece RemovingPiece(Position pos)
+        {
+            //verifica se a posição é ou não é nula:
+            if (pos == null)
+            {
+                return null;
+            }
+            else
+            {
+                //Obtém a peça nessa posição e guarda em uma variável auxiliar: 
+                ChessPiece PieceAux = Piece(pos);
+                //Redefine a posição da peça como nula:
+                PieceAux.position = null;
+                //Remove a peça da matriz chessPieces:
+                chessPieces[pos.line, pos.column] = null;
+                //retorna a peça removida.
+                return PieceAux;
             }
         }
     }

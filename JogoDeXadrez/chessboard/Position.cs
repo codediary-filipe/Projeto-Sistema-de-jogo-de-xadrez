@@ -22,7 +22,7 @@ namespace chessboard
 
         public override string ToString()
         {
-            return $"Posição: {line},{column}";
+            return $"{line}. {column}";
         }
     }
 }
