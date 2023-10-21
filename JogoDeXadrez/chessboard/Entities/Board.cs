@@ -8,27 +8,27 @@ namespace chessboard
     public class Board
     {
         //Elementos Linha, coluna e matriz de peças xadrez:
-        public int line { get; set; }
-        public int column { get; set; }
+        public int Rows { get; set; }
+        public int Columns { get; set; }
         private ChessPiece[,] chessPieces; /*Esta é uma matriz multidimensional de objetos ChessPiece, que representa as peças no tabuleiro. A matriz é privada para evitar que o programador faça alterações diretas nas peças.*/
 
-        public Board(int line, int column)
+        public Board(int rows, int columns)
         {
-            this.line = line;
-            this.column = column;
+            Rows = rows;
+            Columns = columns;
             //Criando uma nova matriz de peças:
-            chessPieces = new ChessPiece[line, column];
+            chessPieces = new ChessPiece[rows, columns];
         }
 
         //Este é um método que retorna a peça localizada em uma posição específica do tabuleiro com base nas coordenadas de linha e coluna:
-        public ChessPiece Piece(int line, int column)
+        public ChessPiece Piece(int rows, int columns)
         {
-            return chessPieces[line, column];
+            return chessPieces[rows, columns];
         }
         // Criando uma sobrecargar do meu Elemento Piece que retorna uma peça com base na posição:
         public ChessPiece Piece(Position pos)
         {
-            return chessPieces[pos.line, pos.column];
+            return chessPieces[pos.Rows, pos.Columns];
         }
 
         /*Este método permite inserir uma peça no tabuleiro em uma posição específica. Ele verifica se a posição já está ocupada e lança uma exceção personalizada BoardException se a posição já estiver ocupada.*/
@@ -41,7 +41,7 @@ namespace chessboard
             else
             {
                 //Acessa a mátriz da minha peça na posição linha x e coluna x e atribui a peça na posição equivalente:
-                chessPieces[pos.line, pos.column] = p;
+                chessPieces[pos.Rows, pos.Columns] = p;
                 //Atribui a posição forneciada a minha peça criada:
                 p.position = pos;
             }
@@ -54,11 +54,11 @@ namespace chessboard
             return Piece(pos) != null;
         }
 
-        /*Este método verifica se uma posição é válida, ou seja, se a linha e a coluna estão dentro dos limites do tabuleiro (de 0 a line-1 e de 0 a column-1).*/
+        /*Este método verifica se uma posição é válida, ou seja, se a linha e a coluna estão dentro dos limites do tabuleiro (de 0 a Rows-1 e de 0 a column-1).*/
         public bool PositionCheck(Position pos)
         {
-            //Verifica-se se a line ou coluna desssa posição é menor que 0 ou maior igual a 8:
-            if (pos.line < 0 || pos.line >= line || pos.column < 0 || pos.column >= line)
+            //Verifica-se se a Rows ou coluna desssa posição é menor que 0 ou maior igual a 8:
+            if (pos.Rows < 0 || pos.Rows >= Rows || pos.Columns < 0 || pos.Columns >= Columns)
             {
                 return false;
             }
@@ -77,10 +77,10 @@ namespace chessboard
             }
         }
         //Classe criada para retirar uma peça do tabuleiro:
-        public ChessPiece RemovingPiece(Position pos)
+        public ChessPiece RemovePiece(Position pos)
         {
             //verifica se a posição é ou não é nula:
-            if (pos == null)
+            if (Piece(pos) == null)
             {
                 return null;
             }
@@ -91,7 +91,7 @@ namespace chessboard
                 //Redefine a posição da peça como nula:
                 PieceAux.position = null;
                 //Remove a peça da matriz chessPieces:
-                chessPieces[pos.line, pos.column] = null;
+                chessPieces[pos.Rows, pos.Columns] = null;
                 //retorna a peça removida.
                 return PieceAux;
             }

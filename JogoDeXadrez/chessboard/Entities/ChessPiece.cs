@@ -1,21 +1,17 @@
-//Importando namespaces para nossa classe:
 
-//Informações:
-/*
-  É uma classe base que representa uma peça de xadrez no jogo. Ela fornece informações e funcionalidades comuns a todas as peças de xadrez.
-*/
+// Classe base para representar uma peça de xadrez.
 namespace chessboard
 {
-    public class ChessPiece
+    public abstract class ChessPiece
     {
-        //Elementos: posição, tabuleiro, quantidade de movimentos e cor da minha peça de xadrez:
+        // Propriedades para cor, contador de movimentos, tabuleiro e posição.
         public Position position { get; set; } //Representa um objeto Position que contém as coordenadas da peça.
         public Color color { get; set; } //Representa a cor da peça. Ela utiliza o enum Color para especificar se a peça é branca ou preta.
-        public int GetMoves { get; protected set; } /*Representa a quantidade de movimentos que a peça realizou.
+        public int MoveCount { get; protected set; } /*Representa a quantidade de movimentos que a peça realizou.
          Ela é protegida (protected set) para que apenas a classe ChessPiece e suas subclasses possam modificar essa propriedade.*/
         public Board board { get; protected set; } //Esta é uma propriedade que faz referência ao tabuleiro em que a peça está localizada.
 
-        //Ele aceita como argumentos um objeto Board (representando o tabuleiro) e uma cor (branca ou preta) para a peça. 
+         // Construtor da peça de xadrez.
         public ChessPiece(Board board, Color color)
         {
             //Inicializa a posição da peça como nula (pois a peça ainda não foi posicionada no tabuleiro)
@@ -23,12 +19,19 @@ namespace chessboard
             this.board = board;
             this.color = color;
             //inicia o contador de movimentos com 0:
-            GetMoves = 0;
+            MoveCount = 0;
         }
-        //Método que faz a incrementação dos movimentos da peça:
-        public void increaseMovements()
+
+        // Incrementa o contador de movimentos da peça.
+        public void IncreaseMoveCount()
         {
-           GetMoves++;
+            MoveCount++;
         }
+        /*Criando um métoodo abstrato 
+         é projetado para calcular e retornar os movimentos possíveis da peça de xadrez específica representada por uma subclasse de ChessPiece. Como ele é abstrato, cada subclasse deve fornecer sua própria implementação desse método, com base nas regras de movimentação da peça que a classe representa.
+
+         Ao adicionar esse método abstrato, a classe base ChessPiece fornece um contrato que obriga suas subclasses a implementar esse método, garantindo que cada tipo de peça de xadrez possa calcular seus próprios movimentos possíveis de acordo com suas regras específicas.
+        */
+        public abstract bool[,] PossibleMoves();
     }
 }

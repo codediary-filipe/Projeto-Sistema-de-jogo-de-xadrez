@@ -2,35 +2,53 @@
 using chessboard;
 using chessgame;
 
-//Informações da classe:
+//Informações da classe Program: 
 /*
-    A classe Program é responsável por iniciar a execução do jogo de xadrez. Criando um tabuleiro, adiciona peças a ele, exibe o tabuleiro na tela e lidando com exceções. Isso permite que o jogador visualize o tabuleiro e qualquer mensagem de erro associada.
+   A classe Program é responsável por iniciar a execução do jogo de xadrez. Ela cria um tabuleiro, adiciona peças a ele, exibe o tabuleiro na tela e lida com exceções. Isso permite que o jogador visualize o tabuleiro e qualquer mensagem de erro associada.
 */
 
-namespace JogoDeXadrez
+namespace ChessGameApp
 {
   public class Program
   {
     public static void Main(String[] args)
     {
-      //A estrutura try é usada para envolver um bloco de código que pode lançar exceções:
+      // Estrutura try para lidar com exceções:
       try
       {
 
-        // Chamando o método para imprimir o tabuleiro:
+        /// Inicializa o jogo e entra em um loop while que continua enquanto o jogo não acabou.
         BoardGame Game = new BoardGame();
-        Screen.ViewBoard(Game.Tabuleiro);
+        while (!Game.IsGameOver)
+        {
+          //Limpa o console.
+          Console.Clear();
+          //Chama o método que visualiza o tabuleiro.
+          Screen.ViewBoard(Game.Tabuleiro);
+          Console.WriteLine();
+
+          // Solicita ao jogador que insira a posição de origem e destino para fazer um movimento no tabuleiro.
+          Console.Write("Origem:");
+          /*O método Screen.ReadScreen().toPosition() ler uma posição em formato "letra + número" e converte elas em objetos Position.*/
+          Position Origem = Screen.ReadScreen().toPosition();
+
+          bool[,] validMoves = Game.Tabuleiro.Piece(Origem).PossibleMoves();
+          Console.Clear();
+          Screen.ViewBoard(Game.Tabuleiro, validMoves);
+
+          Console.Write("Destino:");
+          Position Destiny = Screen.ReadScreen().toPosition();
+
+          // Realiza o movimento no tabuleiro.
+          Game.MakeMove(Origem, Destiny);
+        }
+
       }
-      /*
-      A estrutura catch é usada para capturar exceções do tipo BoardException, que podem ser lançadas dentro do bloco try.
-      Se ocorrer uma exceção do tipo BoardException, o bloco catch será executado. catch (BoardException error).
-      */
+      // Captura exceções do tipo BoardException:
       catch (BoardException error)
       {
         Console.WriteLine(error.Message);
       }
-      //Este comando aguarda a entrada do usuário antes de encerrar o programa. Isso permite que o jogador veja a saída do jogo antes de fechá-lo.
-      Console.ReadKey();
     }
   }
 }
