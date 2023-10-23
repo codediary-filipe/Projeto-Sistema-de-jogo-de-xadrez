@@ -31,7 +31,7 @@ O projeto é um recurso do curso:
  ### 🚀 Etapas e Melhorias
 
 - [x] Iniciando o projeto (13/10/2023)
-- [x] Criar classes para representar: (14/10/2023)
+- [x] Criar classes para representar: (14/10/2023) 
     - tabuleiro;
     - peças;
     - posições e uma aplicação para exibir o tabuleiro na tela.
@@ -40,7 +40,7 @@ O projeto é um recurso do curso:
     - Foi criada a exceção personalizada chamada "BoardException", essa exceção  é lançada em caso de erros relacionados ao tabuleiro.
     - Métodos: Verificação de Posição(PositionCheck) e Verificação de Exceções(CheckPosition) 
      1. "PositionCheck" verifica se uma posição é válida. Ele verifica se a linha e a coluna estão dentro dos limites do tabuleiro.
-     1. . "CheckPosition" verifica se uma posição é válida. Esse método lança a exceção BoardException se a posição for inválida.
+     2. . "CheckPosition" verifica se uma posição é válida. Esse método lança a exceção BoardException se a posição for inválida.
     - Sobrecarga do Método "Piece": A classe Board agora possui uma sobrecarga do método Piece que permite passar um objeto Position como argumento para obter uma peça.
     - Correção na Classe "ChessPiece": A classe ChessPiece foi atualizada para receber um objeto Board e uma cor como argumentos em seu construtor. Já a posição da peça agora começa como nula (null).
     - Subclasses de Peças de Xadrez (Rei e Torre): Foram criadas duas subclasses, King e Tower, que herdam da classe ChessPiece. Elas representam as peças Rei e Torre, respectivamente.
@@ -54,6 +54,11 @@ O projeto é um recurso do curso:
    - Implementando movimentos da torre.
    - Implementando movimentos do rei.
    - Implementação dos movimentos possíveis.
+- [x] Refatoração de código: Melhorias nos comentários e nomenclatura: (18/10/2023)
+   1. Ajuste da nomenclatura de variáveis e métodos.
+   2. Adição de comentários para melhorar a compreensão do código.
+   3. Correção de erros e ajustes gerais do código.
+   4. Adição de novos métodos, como "MakeMove," "MakePlay," "ChangePlayer," "CheckOrigin," e "CheackDestiny," para aprimorar a funcionalidade do jogo de xadrez.
 
 ## 😄 Execução do projeto
 

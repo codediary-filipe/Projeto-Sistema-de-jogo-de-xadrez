@@ -36,7 +36,7 @@ namespace chessboard
         {
             if (CheckIf(pos))
             {
-                throw new BoardException("Essa Posição já existe!");
+                throw new BoardException("Essa Posição já ExistsValidMovese!");
             }
             else
             {
@@ -47,7 +47,7 @@ namespace chessboard
             }
         }
 
-        /*Este método verifica se uma peça existe em uma posição específica do tabuleiro. Ele usa a função PositionCheck para verificar se a posição é válida antes de verificar se a peça existe.*/
+        /*Este método verifica se uma peça ExistsValidMovese em uma posição específica do tabuleiro. Ele usa a função PositionCheck para verificar se a posição é válida antes de verificar se a peça ExistsValidMovese.*/
         public bool CheckIf(Position pos)
         {
             CheckPosition(pos);

@@ -21,26 +21,44 @@ namespace ChessGameApp
         BoardGame Game = new BoardGame();
         while (!Game.IsGameOver)
         {
-          //Limpa o console.
-          Console.Clear();
-          //Chama o método que visualiza o tabuleiro.
-          Screen.ViewBoard(Game.Tabuleiro);
-          Console.WriteLine();
+          try
+          {
+            //Limpa o console.
+            Console.Clear();
+            //Chama o método que visualiza o tabuleiro.
+            Screen.ViewBoard(Game.Tabuleiro);
+            Console.WriteLine();
+            Console.WriteLine($"Turno:{Game.Turn}");
+            Console.WriteLine($"Aguardando vez da {Game.CurrentPlay}");
+            Console.WriteLine();
 
-          // Solicita ao jogador que insira a posição de origem e destino para fazer um movimento no tabuleiro.
-          Console.Write("Origem:");
-          /*O método Screen.ReadScreen().toPosition() ler uma posição em formato "letra + número" e converte elas em objetos Position.*/
-          Position Origem = Screen.ReadScreen().toPosition();
+            // Solicita ao jogador que insira a posição de origem e destino para fazer um movimento no tabuleiro.
+            Console.Write("Origem:");
+            /*O método Screen.ReadScreen().toPosition() ler uma posição em formato "letra + número" e converte elas em objetos Position.*/
+            Position Origem = Screen.ReadScreen().toPosition();
 
-          bool[,] validMoves = Game.Tabuleiro.Piece(Origem).PossibleMoves();
-          Console.Clear();
-          Screen.ViewBoard(Game.Tabuleiro, validMoves);
+            // Verificando a posição de origem digitada.
+            Game.CheckOrigin(Origem);
 
-          Console.Write("Destino:");
-          Position Destiny = Screen.ReadScreen().toPosition();
+            bool[,] validMoves = Game.Tabuleiro.Piece(Origem).PossibleMoves();
+            Console.Clear();
+            Screen.ViewBoard(Game.Tabuleiro, validMoves);
+            Console.WriteLine();
 
-          // Realiza o movimento no tabuleiro.
-          Game.MakeMove(Origem, Destiny);
+            Console.Write("Destino:");
+            Position Destiny = Screen.ReadScreen().toPosition();
+
+            // Verificando se é possível mover a peça da posição de origem para a posição de destino digitada.
+            Game.CheackDestiny(Origem, Destiny);
+
+            // Realiza o movimento no tabuleiro.
+            Game.MakePlay(Origem, Destiny);
+          }
+          catch (BoardException error)
+          {
+            Console.WriteLine(error.Message);
+            Console.ReadLine();
+          }
         }
 
       }
