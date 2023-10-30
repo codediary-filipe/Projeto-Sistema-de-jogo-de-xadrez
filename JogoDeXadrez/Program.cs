@@ -1,69 +1,74 @@
-﻿//Importando namespaces para nossa classe:
-using chessboard;
-using chessgame;
+﻿//Importando namespaces:
+using Tabuleiro_De_Xadrez; //Contém todas as classes, métodos e variáveis relacionada ao tabuleiro.
+using Jogo; //Contém as classes, métodos e variáveis relacionadas a lógica de jogo do xadrez,
 
-//Informações da classe Program: 
+//Classe Program:
 /*
-   A classe Program é responsável por iniciar a execução do jogo de xadrez. Ela cria um tabuleiro, adiciona peças a ele, exibe o tabuleiro na tela e lida com exceções. Isso permite que o jogador visualize o tabuleiro e qualquer mensagem de erro associada.
+   Responsável por iniciar a execução do jogo de xadrez. Contido nela temos:
+   1. O teste de Exceções envolvendo a lógica de execução do jogo.
+   2. Criação da partida.
+   3. O teste que verifica se a partida está iniciada ou finalizada.
 */
 
-namespace ChessGameApp
+namespace Xadrez_No_Console
 {
   public class Program
   {
     public static void Main(String[] args)
     {
-      // Estrutura try para lidar com exceções:
+      //Estrutura try{Lógica do código} catch{Retorno, caso excções} para lidar com exceções:
       try
       {
 
-        /// Inicializa o jogo e entra em um loop while que continua enquanto o jogo não acabou.
-        BoardGame Game = new BoardGame();
-        while (!Game.IsGameOver)
+        //Iniciando / Criando uma nova partida de xadrez.
+        PartidaDeXadrez Partida = new();
+        //Estrutua de repetição while(Condição) {Bloco de execução} enquanto a condição for verdadeira, o bloco é executado.
+        while (!Partida.StatusDaPartida) // !false = true (Partida finalizada) !true = false (Partida Iniciada).
         {
           try
           {
+            //Chama o método da classe tela que é responsável por imprimir o tabuleiro de xadrez no console.
+            Tela.VisualizarPartida(Partida);
+            //Solicitando a posição de origem da peça.
+            Console.Write("Origem:");
+            /*O método Tela.LerPosicao().ToPosicao() ler uma posição em formato "letra + número" e converte ela em um objeto Posição.*/
+            Posicao Origem = Tela.LerPosicao().ToPosicao();
+
+            //Verificando a posição de origem digitada.
+            Partida.VerificarOrigem(Origem);
+
+            //Cria uma matriz de movimentos válidos.
+            bool[,] MovimentosValidos = Partida.Tabuleiro.Peca(Origem).MovimentosPossiveis();
             //Limpa o console.
             Console.Clear();
-            //Chama o método que visualiza o tabuleiro.
-            Screen.ViewBoard(Game.Tabuleiro);
-            Console.WriteLine();
-            Console.WriteLine($"Turno:{Game.Turn}");
-            Console.WriteLine($"Aguardando vez da {Game.CurrentPlay}");
-            Console.WriteLine();
-
-            // Solicita ao jogador que insira a posição de origem e destino para fazer um movimento no tabuleiro.
-            Console.Write("Origem:");
-            /*O método Screen.ReadScreen().toPosition() ler uma posição em formato "letra + número" e converte elas em objetos Position.*/
-            Position Origem = Screen.ReadScreen().toPosition();
-
-            // Verificando a posição de origem digitada.
-            Game.CheckOrigin(Origem);
-
-            bool[,] validMoves = Game.Tabuleiro.Piece(Origem).PossibleMoves();
-            Console.Clear();
-            Screen.ViewBoard(Game.Tabuleiro, validMoves);
+            //Chama o método de visualizar tabuleiro, passando como argumento (partida e os movimentos possíveis)
+            Tela.VisualizarTabuleiro(Partida.Tabuleiro, MovimentosValidos);
+            //Espaçamento em branco.
             Console.WriteLine();
 
             Console.Write("Destino:");
-            Position Destiny = Screen.ReadScreen().toPosition();
+            //Guarda a posição de destino, já convertida em uma variávia temporária.
+            Posicao Destiny = Tela.LerPosicao().ToPosicao();
 
-            // Verificando se é possível mover a peça da posição de origem para a posição de destino digitada.
-            Game.CheackDestiny(Origem, Destiny);
+            //Verificando se é possível mover a peça da posição de origem para a posição de destino digitada.
+            Partida.VerificarDestino(Origem, Destiny);
 
-            // Realiza o movimento no tabuleiro.
-            Game.MakePlay(Origem, Destiny);
+            //Controla a vez dos jogadores e verifica se o joador atual está em xeque e xeque mate.
+            Partida.ControleDeTurno(Origem, Destiny);
           }
-          catch (BoardException error)
+          catch (TabuleiroException error)
           {
             Console.WriteLine(error.Message);
             Console.ReadLine();
           }
+          Console.Clear();
+          //Inicia um novo jogo.
+          Tela.VisualizarPartida(Partida);
         }
 
       }
-      // Captura exceções do tipo BoardException:
-      catch (BoardException error)
+      // Captura exceções do tipo TabuleiroException:
+      catch (TabuleiroException error)
       {
         Console.WriteLine(error.Message);
       }
