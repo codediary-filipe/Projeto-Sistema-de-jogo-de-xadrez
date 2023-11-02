@@ -5,7 +5,9 @@ namespace Jogo
 {
     public class Peao : PecasDeXadrez
     {
-        public Peao(Tabuleiro Tabuleiro, Color color) : base(Tabuleiro, color) { }
+        public Peao(Tabuleiro Tabuleiro, Color color) : base(Tabuleiro, color)
+        {
+        }
         public override string ToString()
         {
             return $"P";

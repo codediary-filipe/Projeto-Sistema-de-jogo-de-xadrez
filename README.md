@@ -64,7 +64,8 @@ O projeto é um recurso do curso:
    - Melhorias nos comentários do código.
    - Correção da lógica e melhoria dos métodos.
    - Implementação de todas as peças do tabuleiro de xadrez.
-
+- [x] Implementação das jogadas especiais 02/11/2023
+   - Jogada Especial Roque pequeno e Roque Grande.
 ## 😄 Execução do projeto
 
 <table>

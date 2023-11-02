@@ -20,7 +20,6 @@ namespace Jogo
         public int Turno { get; private set; }
         public Color JogadorAtual { get; private set; }
         public bool StatusDaPartida { get; private set; }
-
         //Verificando se o jogador está em Xeque.
         public bool PecaEmXeque { get; private set; }
         //Conjunto de peças em jogo e peças capturadas do tabuleiro.
@@ -51,7 +50,7 @@ namespace Jogo
             ColocarPeca('b', 8, new Cavalo(Tabuleiro, Color.Preta));
             ColocarPeca('c', 8, new Bispo(Tabuleiro, Color.Preta));
             ColocarPeca('d', 8, new Dama(Tabuleiro, Color.Preta));
-            ColocarPeca('e', 8, new Rei(Tabuleiro, Color.Preta));
+            ColocarPeca('e', 8, new Rei(Tabuleiro, this, Color.Preta));
             ColocarPeca('g', 8, new Cavalo(Tabuleiro, Color.Preta));
             ColocarPeca('f', 8, new Bispo(Tabuleiro, Color.Preta));
             ColocarPeca('h', 8, new Torre(Tabuleiro, Color.Preta));
@@ -69,7 +68,7 @@ namespace Jogo
             ColocarPeca('b', 1, new Cavalo(Tabuleiro, Color.Branca));
             ColocarPeca('c', 1, new Bispo(Tabuleiro, Color.Branca));
             ColocarPeca('d', 1, new Dama(Tabuleiro, Color.Branca));
-            ColocarPeca('e', 1, new Rei(Tabuleiro, Color.Branca));
+            ColocarPeca('e', 1, new Rei(Tabuleiro, this, Color.Branca));
             ColocarPeca('g', 1, new Cavalo(Tabuleiro, Color.Branca));
             ColocarPeca('f', 1, new Bispo(Tabuleiro, Color.Branca));
             ColocarPeca('h', 1, new Torre(Tabuleiro, Color.Branca));
@@ -107,6 +106,33 @@ namespace Jogo
             if (PecaCapturada != null)
             {
                 PecasCapturadas.Add(PecaCapturada);
+            }
+            //Verifica se a peça retirada é um Rei e se a movimentação é um Roque (destino.Colunas == origem.Colunas + 2)
+            if (PecaRetirada is Rei && destino.Colunas == origem.Colunas + 2)
+            {
+                //Define as posições de origem e destino da Torre no movimento de Roque.
+                Posicao OrigemT = new(origem.Linhas, origem.Colunas + 3);
+                //A Torre é movida para a posição correspondente, adjacente ao Rei no Roque.
+                Posicao DestinoT = new(origem.Linhas, origem.Colunas + 1);
+                //Remove a Torre de sua posição original para ser movida durante o Roque.
+                PecasDeXadrez T = Tabuleiro.RemovePeca(OrigemT);
+                //Incrementa o contador de movimentos da Torre após o Roque.
+                T.IncrementarMovimento();
+                //Insere a Torre na nova posição, completando o movimento do Roque.
+                Tabuleiro.InserirPeca(T, DestinoT);
+            }
+            //Verifica se a peça retirada é uma instância de rei e se o destino é igual a origem + 2.
+            if (PecaRetirada is Rei && destino.Colunas == origem.Colunas - 2)
+            {
+                //Pega a posição de origem e destino da torre para o roque grande.
+                Posicao OrigemT = new(origem.Linhas, origem.Colunas - 4);
+                Posicao DestinoT = new(origem.Linhas, origem.Colunas - 1);
+                //Retira a torre da sua posição de origem.
+                PecasDeXadrez T = Tabuleiro.RemovePeca(OrigemT);
+                //Incrementa o seu movimento.
+                T.IncrementarMovimento();
+                //Insere a torre na posição de destino.
+                Tabuleiro.InserirPeca(T, DestinoT);
             }
             return PecaCapturada;
         }
@@ -163,6 +189,25 @@ namespace Jogo
             }
             //Inserindo a peça removida da posição de destino e atribuíndo a posição de origem.
             Tabuleiro.InserirPeca(p, origem);
+
+            //#Jogada Especial Roque
+            if (p is Rei && destino.Colunas == origem.Colunas + 2)
+            {
+                Posicao OrigemT = new(origem.Linhas, destino.Colunas + 3);
+                Posicao DestinoT = new(origem.Linhas, destino.Colunas + 1);
+                PecasDeXadrez T = Tabuleiro.RemovePeca(DestinoT);
+                T.DecrementarMovimento();
+                Tabuleiro.InserirPeca(T, OrigemT);
+            }
+
+            if (p is Rei && destino.Colunas == origem.Colunas - 2)
+            {
+                Posicao OrigemT = new(origem.Linhas, destino.Colunas - 4);
+                Posicao DestinoT = new(origem.Linhas, destino.Colunas - 1);
+                PecasDeXadrez T = Tabuleiro.RemovePeca(DestinoT);
+                T.DecrementarMovimento();
+                Tabuleiro.InserirPeca(T, OrigemT);
+            }
         }
 
         //Método controle de turno: Verifica se o jogador está em xeque ou xeque mate, incrementa o turno e muda o jogador da vez.
