@@ -5,8 +5,10 @@ namespace Jogo
 {
     public class Peao : PecasDeXadrez
     {
-        public Peao(Tabuleiro Tabuleiro, Color color) : base(Tabuleiro, color)
+        public PartidaDeXadrez partida { get; private set; }
+        public Peao(Tabuleiro Tabuleiro, Color color, PartidaDeXadrez partida) : base(Tabuleiro, color)
         {
+            this.partida = partida;
         }
         public override string ToString()
         {
@@ -59,6 +61,22 @@ namespace Jogo
                 {
                     mat[pos.Linhas, pos.Colunas] = true;
                 }
+                //#Jogada Especial En Passant En Passant
+                if (Posicao.Linhas == 3) //Se a peça estiver na linha 3 (no caso dos peões brancos)
+                {
+                    Posicao esquerda = new Posicao(Posicao.Linhas, Posicao.Colunas - 1);
+                    if (Tabuleiro.ValidarPosicao(esquerda) && ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == partida.PecaVulneravel)
+                    {
+                        //Se houver um peão inimigo à esquerda, é possível o movimento En Passant (para esquerda)
+                        mat[esquerda.Linhas - 1, esquerda.Colunas] = true;
+                    }
+                    Posicao direita = new Posicao(Posicao.Linhas, Posicao.Colunas + 1);
+                    if (Tabuleiro.ValidarPosicao(direita) && ExisteInimigo(direita) && Tabuleiro.Peca(direita) == partida.PecaVulneravel)
+                    {
+                        //Se houver um peão inimigo à direita, é possível o movimento En Passant (para direita)
+                        mat[direita.Linhas - 1, direita.Colunas] = true;
+                    }
+                }
             }
             else //Regras para peões da cor preta:
             {
@@ -81,6 +99,20 @@ namespace Jogo
                 if (Tabuleiro.ValidarPosicao(pos) && ExisteInimigo(pos))
                 {
                     mat[pos.Linhas, pos.Colunas] = true;
+                }
+                //#Jogada Especial En Passant En Passant
+                if (Posicao.Linhas == 4)
+                {
+                    Posicao Esquerda = new(Posicao.Linhas, Posicao.Colunas - 1);
+                    if (Tabuleiro.ValidarPosicao(Esquerda) && ExisteInimigo(Esquerda) && Tabuleiro.Peca(Esquerda) == partida.PecaVulneravel)
+                    {
+                        mat[Esquerda.Linhas + 1, Esquerda.Colunas] = true;
+                    }
+                    Posicao Direita = new(Posicao.Linhas, Posicao.Colunas + 1);
+                    if (Tabuleiro.ValidarPosicao(Direita) && ExisteInimigo(Direita) && Tabuleiro.Peca(Direita) == partida.PecaVulneravel)
+                    {
+                        mat[Direita.Linhas + 1, Direita.Colunas] = true;
+                    }
                 }
             }
             //Retorna a matriz com os movimentos possíveis da peça.

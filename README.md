@@ -66,6 +66,8 @@ O projeto é um recurso do curso:
    - Implementação de todas as peças do tabuleiro de xadrez.
 - [x] Implementação das jogadas especiais 02/11/2023
    - Jogada Especial Roque pequeno e Roque Grande.
+   - Jogada Especial En Passant.
+   - Jogada Especial Promoção.
 ## 😄 Execução do projeto
 
 <table>

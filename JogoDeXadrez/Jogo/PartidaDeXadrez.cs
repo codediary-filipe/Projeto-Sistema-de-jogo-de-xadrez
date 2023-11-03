@@ -25,6 +25,8 @@ namespace Jogo
         //Conjunto de peças em jogo e peças capturadas do tabuleiro.
         public HashSet<PecasDeXadrez> Pecas; //HashSet é uma coleção de conjuntos(elementos únicos) que não permite duplicatas
         public HashSet<PecasDeXadrez> PecasCapturadas;
+        //Criando a nossa variável que guardarar a peça que está vulnerável a um passante
+        public PecasDeXadrez PecaVulneravel { get; private set; }
 
         public PartidaDeXadrez()
         {
@@ -36,7 +38,7 @@ namespace Jogo
             StatusDaPartida = false; //Definindo o estado da partida.
             PecaEmXeque = false; //Defindo o estado de peças em Xeque.
             JogadorAtual = Color.Branca; //Definindo o jogador atual.
-
+            PecaVulneravel = null; //Iniciada como nula.
             //Chamano o método que insere peças em nosso tabuleiro.
             PecasDoTabuleiro();
         }
@@ -54,14 +56,14 @@ namespace Jogo
             ColocarPeca('g', 8, new Cavalo(Tabuleiro, Color.Preta));
             ColocarPeca('f', 8, new Bispo(Tabuleiro, Color.Preta));
             ColocarPeca('h', 8, new Torre(Tabuleiro, Color.Preta));
-            ColocarPeca('a', 7, new Peao(Tabuleiro, Color.Preta));
-            ColocarPeca('b', 7, new Peao(Tabuleiro, Color.Preta));
-            ColocarPeca('c', 7, new Peao(Tabuleiro, Color.Preta));
-            ColocarPeca('d', 7, new Peao(Tabuleiro, Color.Preta));
-            ColocarPeca('e', 7, new Peao(Tabuleiro, Color.Preta));
-            ColocarPeca('g', 7, new Peao(Tabuleiro, Color.Preta));
-            ColocarPeca('f', 7, new Peao(Tabuleiro, Color.Preta));
-            ColocarPeca('h', 7, new Peao(Tabuleiro, Color.Preta));
+            ColocarPeca('a', 7, new Peao(Tabuleiro, Color.Preta, this));
+            ColocarPeca('b', 7, new Peao(Tabuleiro, Color.Preta, this));
+            ColocarPeca('c', 7, new Peao(Tabuleiro, Color.Preta, this));
+            ColocarPeca('d', 7, new Peao(Tabuleiro, Color.Preta, this));
+            ColocarPeca('e', 7, new Peao(Tabuleiro, Color.Preta, this));
+            ColocarPeca('g', 7, new Peao(Tabuleiro, Color.Preta, this));
+            ColocarPeca('f', 7, new Peao(Tabuleiro, Color.Preta, this));
+            ColocarPeca('h', 7, new Peao(Tabuleiro, Color.Preta, this));
 
             //Brancas:
             ColocarPeca('a', 1, new Torre(Tabuleiro, Color.Branca));
@@ -72,14 +74,14 @@ namespace Jogo
             ColocarPeca('g', 1, new Cavalo(Tabuleiro, Color.Branca));
             ColocarPeca('f', 1, new Bispo(Tabuleiro, Color.Branca));
             ColocarPeca('h', 1, new Torre(Tabuleiro, Color.Branca));
-            ColocarPeca('a', 2, new Peao(Tabuleiro, Color.Branca));
-            ColocarPeca('b', 2, new Peao(Tabuleiro, Color.Branca));
-            ColocarPeca('c', 2, new Peao(Tabuleiro, Color.Branca));
-            ColocarPeca('d', 2, new Peao(Tabuleiro, Color.Branca));
-            ColocarPeca('e', 2, new Peao(Tabuleiro, Color.Branca));
-            ColocarPeca('g', 2, new Peao(Tabuleiro, Color.Branca));
-            ColocarPeca('f', 2, new Peao(Tabuleiro, Color.Branca));
-            ColocarPeca('h', 2, new Peao(Tabuleiro, Color.Branca));
+            ColocarPeca('a', 2, new Peao(Tabuleiro, Color.Branca, this));
+            ColocarPeca('b', 2, new Peao(Tabuleiro, Color.Branca, this));
+            ColocarPeca('c', 2, new Peao(Tabuleiro, Color.Branca, this));
+            ColocarPeca('d', 2, new Peao(Tabuleiro, Color.Branca, this));
+            ColocarPeca('e', 2, new Peao(Tabuleiro, Color.Branca, this));
+            ColocarPeca('g', 2, new Peao(Tabuleiro, Color.Branca, this));
+            ColocarPeca('f', 2, new Peao(Tabuleiro, Color.Branca, this));
+            ColocarPeca('h', 2, new Peao(Tabuleiro, Color.Branca, this));
         }
 
         //Método utilizado para colocar peças em uma posição definida.
@@ -134,9 +136,29 @@ namespace Jogo
                 //Insere a torre na posição de destino.
                 Tabuleiro.InserirPeca(T, DestinoT);
             }
+            //#Jogada Especial En Passant em passant
+            if (PecaRetirada is Peao) //Verifico se a peça é um peão
+            {
+                //Verifica se o peão mudou de coluna e se ele não fez um movimento de captura de peça.
+                if (destino.Colunas != origem.Colunas && PecaCapturada == null)
+                {
+                    Posicao PosP;
+                    //Verifica se o peão é branco ou preto para determinar a direção da posição capturada.
+                    if (PecaRetirada.color == Color.Branca)
+                    {
+                        PosP = new Posicao(destino.Linhas + 1, destino.Colunas);
+                    }
+                    else
+                    {
+                        PosP = new Posicao(destino.Linhas - 1, destino.Colunas);
+                    }
+                    //Captura o peão en passant e adiciona à lista de peças capturadas.
+                    PecaCapturada = Tabuleiro.RemovePeca(PosP);
+                    PecasCapturadas.Add(PecaCapturada);
+                }
+            }
             return PecaCapturada;
         }
-
         //Método Peça Capturada: Percorrer o conjunto de peças capturadas e retorna somente as peças capturadas da cor definida.
         public HashSet<PecasDeXadrez> PecaCapturada(Color cor)
         {
@@ -189,7 +211,6 @@ namespace Jogo
             }
             //Inserindo a peça removida da posição de destino e atribuíndo a posição de origem.
             Tabuleiro.InserirPeca(p, origem);
-
             //#Jogada Especial Roque
             if (p is Rei && destino.Colunas == origem.Colunas + 2)
             {
@@ -199,7 +220,6 @@ namespace Jogo
                 T.DecrementarMovimento();
                 Tabuleiro.InserirPeca(T, OrigemT);
             }
-
             if (p is Rei && destino.Colunas == origem.Colunas - 2)
             {
                 Posicao OrigemT = new(origem.Linhas, destino.Colunas - 4);
@@ -207,6 +227,25 @@ namespace Jogo
                 PecasDeXadrez T = Tabuleiro.RemovePeca(DestinoT);
                 T.DecrementarMovimento();
                 Tabuleiro.InserirPeca(T, OrigemT);
+            }
+            //#Jogada Especial En Passant em passant
+            if (p is Peao)
+            {
+                if (origem.Colunas != destino.Colunas && peca == PecaVulneravel)
+                {
+                    //Determina a posição onde a peça capturada "en passant" será reinserida
+                    PecasDeXadrez peao = Tabuleiro.RemovePeca(destino);
+                    Posicao PosP;
+                    if (p.color == Color.Branca)
+                    {
+                        PosP = new Posicao(3, destino.Colunas); //Para peças brancas
+                    }
+                    else
+                    {
+                        PosP = new Posicao(4, destino.Colunas); //Para peças pretas
+                    }
+                    Tabuleiro.InserirPeca(peao, PosP);//Reinserção da peça no local correto
+                }
             }
         }
 
@@ -221,6 +260,25 @@ namespace Jogo
                 DesfazerMovimento(origem, destino, p);
                 throw new TabuleiroException("Jagador atual não pode se colocar em Xeque!");
             }
+
+            PecasDeXadrez Peca = Tabuleiro.Peca(destino);
+
+            //#JogadaEspecial 
+            if (Peca is Peao)
+            {
+                if (Peca.color == Color.Branca && destino.Linhas == 0 || (Peca.color == Color.Preta && destino.Linhas == 7))
+                {
+                    //Remove o peão do destino após atingir a última linha
+                    p = Tabuleiro.RemovePeca(destino);
+                    Pecas.Remove(p);
+                    //Cria uma nova Dama com a cor do peão promovido
+                    PecasDeXadrez Dama = new Dama(Tabuleiro, p.color);
+                    //Insere a nova Dama no local onde o peão foi promovido
+                    Tabuleiro.InserirPeca(Dama, destino);
+                    Pecas.Add(Dama);
+                }
+            }
+
             //Verifica se o adversário está em xeque.
             if (EstaEmXeque(Adversario(JogadorAtual)))
             {
@@ -241,6 +299,16 @@ namespace Jogo
                 Turno++;
                 //Mudo o jogador atual.
                 MudarVez();
+            }
+
+            //#Jogada Especial En Passant em passant
+            if (Peca is Peao && (destino.Linhas == origem.Linhas - 2 || destino.Linhas == origem.Linhas + 2))
+            {
+                PecaVulneravel = Peca;
+            }
+            else
+            {
+                PecaVulneravel = null;
             }
         }
 
