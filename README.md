@@ -3,8 +3,7 @@
 </div>
 
 # 💻 Projeto
-O projeto ainda está em desenvolvimento
-
+Projeto finalizado!
 ### Sistema de Jogo de xadrez em C#
 > Este é um projeto de um jogo de xadrez em C# que foi desenvolvido como parte de um estudo sobre os conceitos de programação orientada a objetos. Para demonstrar tópicos essenciais em POO:
 * construtores;
